@@ -1,0 +1,8 @@
+services:
+  gcc:
+    build: .
+    container_name: gcc_c
+    volumes:
+      - ./code:/code
+    stdin_open: true
+    tty: true

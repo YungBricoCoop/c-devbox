@@ -1,10 +1,9 @@
-FROM alpine:latest
+FROM python:3.8-alpine
 
 RUN apk add --no-cache \
-	gcc \
-	g++ \
 	musl-dev \
 	make \
+	cmake \
 	valgrind \
 	zsh \
 	git \
@@ -13,7 +12,11 @@ RUN apk add --no-cache \
 	ninja \
 	ncurses \
 	cppcheck \
+	clang \
+	clang-extra-tools \
 	&& rm -rf /var/cache/apk/*
+
+RUN pip install cpplint
 
 RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" --unattended
 

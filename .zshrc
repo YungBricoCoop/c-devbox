@@ -21,16 +21,28 @@ plugins=(
   command-not-found 
 )
 
-alias cmakec='cmake -DCMAKE_BUILD_TYPE=Debug ..' 
-alias makec='make -j$(nproc)'  
-alias clang-format-all='find . -name "*.cpp" -o -name "*.h" | xargs clang-format -i'  
-
-rnb() {
-  g++ main.cpp -o main && ./main
+x() {
+  clang++ main.cpp -o main && ./main
 }
 
-export CXX="g++" 
-export CC="gcc"  
+cx() {
+	clang main.c -o main && ./main
+}
+
+cformat() {
+  find . -name "*.cpp" -o -name "*.h" | xargs clang-format -i
+}
+
+ccheck() {
+  cppcheck --enable=all .
+}
+
+clint() {
+  cpplint *.cpp
+}
+
+export CXX="clang++"
+export CC="clang"
 
 export CXXFLAGS="-fdiagnostics-color=always"
 export CFLAGS="-fdiagnostics-color=always"

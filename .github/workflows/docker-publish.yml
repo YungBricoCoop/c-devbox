@@ -1,0 +1,48 @@
+name: Publish c-devbox Docker image to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
+    steps:
+      - name: 🛠️ Check out the repo
+        uses: actions/checkout@v4
+
+      - name: 🔑 Log in to Docker Hub
+        uses: docker/login-action@v3.3.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 🏷️ Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5.5.1
+        with:
+          images: yungbricocoop/c-devbox
+
+      - name: 🚀 Build and push image
+        id: push
+        uses: docker/build-push-action@v6.9.0
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: 📜 Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: "yungbricocoop/c-devbox"
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true

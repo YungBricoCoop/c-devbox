@@ -18,6 +18,9 @@ jobs:
       - name: 🛠️ Check out the repo
         uses: actions/checkout@v4
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.2.0
+
       - name: 🛠️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.7.1
 
@@ -33,27 +36,15 @@ jobs:
         with:
           images: yungbricocoop/c-devbox
 
-      - name: 🚀 Build and push for amd64
-        id: push_amd64
+      - name: 🚀 Build and push image
+        id: push_image
         uses: docker/build-push-action@v6.9.0
         with:
           context: .
           file: ./Dockerfile
           push: true
           tags: "yungbricocoop/c-devbox:latest"
-          platforms: linux/amd64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: 🚀 Build and push for arm64
-        id: push_arm64
-        uses: docker/build-push-action@v6.9.0
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: "yungbricocoop/c-devbox:latest"
-          platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

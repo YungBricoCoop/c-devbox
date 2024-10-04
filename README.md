@@ -15,13 +15,13 @@ Contains:
 Windows :
 
 ```sh
-docker run -v ".\code:/code" -it yungbricocoop/c-devbox
+docker run --name c-devbox -v ".\code:/code" -it yungbricocoop/c-devbox
 ```
 
 Linux :
 
 ```sh
-docker run -v "./code:/code" -it yungbricocoop/c-devbox
+docker run --name c-devbox -v "./code:/code" -it yungbricocoop/c-devbox
 ```
 
 ## ⌨️ Shortcuts

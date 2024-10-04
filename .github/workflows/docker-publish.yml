@@ -30,7 +30,7 @@ jobs:
         with:
           images: yungbricocoop/c-devbox
 
-      - name: 🚀 Build and push image
+      - name: 🚀 Build and push multi-platform image
         id: push
         uses: docker/build-push-action@v6.9.0
         with:
@@ -38,6 +38,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: "yungbricocoop/c-devbox:latest"
+          platforms: linux/amd64,linux/arm64
 
       - name: 📝 Update Docker Hub description
         uses: peter-evans/dockerhub-description@v4

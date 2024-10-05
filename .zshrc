@@ -38,7 +38,7 @@ ccheck() {
 }
 
 clint() {
-  cpplint *.cpp
+  clang-tidy -checks=* main.cpp -- -std=c++17
 }
 
 export CXX="clang++"

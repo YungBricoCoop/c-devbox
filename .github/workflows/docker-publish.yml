@@ -36,7 +36,7 @@ jobs:
         with:
           images: yungbricocoop/c-devbox
 
-      - name: 🚀 Build and push image
+      - name: 🚀 Build and push normal image
         id: push_image
         uses: docker/build-push-action@v6.9.0
         with:
@@ -44,6 +44,18 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: "yungbricocoop/c-devbox:latest"
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 🚀 Build and push glib image
+        id: push_glib_image
+        uses: docker/build-push-action@v6.9.0
+        with:
+          context: .
+          file: ./glib.Dockerfile
+          push: true
+          tags: "yungbricocoop/c-devbox:glib"
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
